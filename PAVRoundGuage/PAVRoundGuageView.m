@@ -86,37 +86,10 @@ float PAVGuageDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI /
      build an animation that has 2 half-rotations so it goes the right way,
      and continues the right way.*/
     
-/*    CGFloat halfDegreesToRotate = self.degreesPerPoint * (CGFloat)newNumber * 0.5;
-    CGFloat fullDegreesToRotate = self.degreesPerPoint * (CGFloat)newNumber;
-    halfDegreesToRotate += self.minimumAngle;
-    fullDegreesToRotate += self.minimumAngle;
-    
-    
-    CAKeyframeAnimation* animation;
-    animation = [CAKeyframeAnimation animationWithKeyPath:@"transform.rotation.z"];
-    
-    // set delegate so we can fire animationDidStop
-    animation.delegate = self;
-    animation.duration = 3.0;
-    animation.cumulative = YES;
-    animation.repeatCount = 1;
-    animation.removedOnCompletion = NO;
-    animation.fillMode = kCAFillModeForwards;
-    
-    animation.values = @[[NSNumber numberWithFloat:PAVGuageDegreesToRadians(self.minimumAngle)],
-                        [NSNumber numberWithFloat:PAVGuageDegreesToRadians(halfDegreesToRotate)],
-                        [NSNumber numberWithFloat:PAVGuageDegreesToRadians(fullDegreesToRotate)]];
-    
-    animation.keyTimes = @[[NSNumber numberWithFloat:0.0],
-                          [NSNumber numberWithFloat:0.5],
-                          [NSNumber numberWithFloat:1.0]];
-    
-    animation.timingFunctions = @[[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear],
-                                 [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear]];*/
-    
     CALayer* layer = self.pointerView.layer;
     
-    CAKeyframeAnimation *animation = [self revUpAnimationForNumber:newNumber];
+    //CAKeyframeAnimation *animation = [self revUpAnimationForNumber:newNumber];
+    CAKeyframeAnimation *animation = [self peggedAnimationForNumber:newNumber];
     
     [layer addAnimation:animation forKey:@"transform.rotation.z"];
 }
@@ -127,6 +100,7 @@ float PAVGuageDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI /
     }
 }
 
+/** Animation where the needle goes farther than the final resting number momentarily */
 - (CAKeyframeAnimation *)revUpAnimationForNumber:(NSUInteger)newNumber {
     CGFloat halfDegreesToRotate = self.degreesPerPoint * (CGFloat)newNumber * 0.5;
     CGFloat fullDegreesToRotate = self.degreesPerPoint * (CGFloat)newNumber;
@@ -162,6 +136,83 @@ float PAVGuageDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI /
     animation.timingFunctions = @[[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn],
                                   [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut],
                                   [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]
+                                  ];
+    
+    return animation;
+}
+
+- (CGFloat)degreesFromMinimumAngleForNumber:(NSUInteger)newNumber multiplier:(CGFloat)multiplier {
+    CGFloat degreesToRotate = self.degreesPerPoint * (CGFloat)newNumber * multiplier;
+    degreesToRotate += self.minimumAngle;
+    return degreesToRotate;
+}
+
+- (CAKeyframeAnimation *)peggedAnimationForNumber:(NSUInteger)newNumber {
+    CGFloat halfDegreesToRotate = [self degreesFromMinimumAngleForNumber:newNumber multiplier:0.5];
+    CGFloat fullDegreesToRotate = [self degreesFromMinimumAngleForNumber:newNumber multiplier:1.0];
+    
+    
+    CAKeyframeAnimation* animation;
+    animation = [CAKeyframeAnimation animationWithKeyPath:@"transform.rotation.z"];
+    
+    // set delegate so we can fire animationDidStop
+    animation.delegate = self;
+    animation.duration = 1.0;
+    animation.cumulative = YES;
+    animation.repeatCount = 1;
+    animation.removedOnCompletion = NO;
+    animation.fillMode = kCAFillModeForwards;
+    
+    // 15 values
+    animation.values = @[[NSNumber numberWithFloat:PAVGuageDegreesToRadians(self.minimumAngle)],
+                         [NSNumber numberWithFloat:PAVGuageDegreesToRadians(halfDegreesToRotate)],
+                         [NSNumber numberWithFloat:PAVGuageDegreesToRadians([self degreesFromMinimumAngleForNumber:newNumber multiplier:1.1])],
+                         [NSNumber numberWithFloat:PAVGuageDegreesToRadians([self degreesFromMinimumAngleForNumber:newNumber multiplier:0.9])],
+                         [NSNumber numberWithFloat:PAVGuageDegreesToRadians([self degreesFromMinimumAngleForNumber:newNumber multiplier:1.068])],
+                         [NSNumber numberWithFloat:PAVGuageDegreesToRadians([self degreesFromMinimumAngleForNumber:newNumber multiplier:0.935])],
+                         [NSNumber numberWithFloat:PAVGuageDegreesToRadians([self degreesFromMinimumAngleForNumber:newNumber multiplier:1.045])],
+                         [NSNumber numberWithFloat:PAVGuageDegreesToRadians([self degreesFromMinimumAngleForNumber:newNumber multiplier:0.965])],
+                         [NSNumber numberWithFloat:PAVGuageDegreesToRadians([self degreesFromMinimumAngleForNumber:newNumber multiplier:1.030])],
+                         [NSNumber numberWithFloat:PAVGuageDegreesToRadians([self degreesFromMinimumAngleForNumber:newNumber multiplier:0.979])],
+                         [NSNumber numberWithFloat:PAVGuageDegreesToRadians([self degreesFromMinimumAngleForNumber:newNumber multiplier:1.018])],
+                         [NSNumber numberWithFloat:PAVGuageDegreesToRadians([self degreesFromMinimumAngleForNumber:newNumber multiplier:0.985])],
+                         [NSNumber numberWithFloat:PAVGuageDegreesToRadians([self degreesFromMinimumAngleForNumber:newNumber multiplier:1.012])],
+                         [NSNumber numberWithFloat:PAVGuageDegreesToRadians([self degreesFromMinimumAngleForNumber:newNumber multiplier:0.990])],
+                         [NSNumber numberWithFloat:PAVGuageDegreesToRadians(fullDegreesToRotate)],
+                         ];
+    
+    animation.keyTimes = @[[NSNumber numberWithFloat:0.0],
+                           [NSNumber numberWithFloat:0.018],
+                           [NSNumber numberWithFloat:0.036],
+                           [NSNumber numberWithFloat:0.055],
+                           [NSNumber numberWithFloat:0.074],
+                           [NSNumber numberWithFloat:0.101],
+                           [NSNumber numberWithFloat:0.129],
+                           [NSNumber numberWithFloat:0.170],
+                           [NSNumber numberWithFloat:0.221],
+                           [NSNumber numberWithFloat:0.295],
+                           [NSNumber numberWithFloat:0.370],
+                           [NSNumber numberWithFloat:0.483],
+                           [NSNumber numberWithFloat:0.610],
+                           [NSNumber numberWithFloat:0.720],
+                           [NSNumber numberWithFloat:1.0],
+                           ];
+    
+    // 14 timings
+    animation.timingFunctions = @[[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear],
+                                  [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear],
+                                  [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear],
+                                  [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear],
+                                  [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear],
+                                  [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear],
+                                  [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear],
+                                  [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear],
+                                  [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear],
+                                  [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear],
+                                  [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear],
+                                  [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear],
+                                  [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear],
+                                  [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]
                                   ];
     
     return animation;
