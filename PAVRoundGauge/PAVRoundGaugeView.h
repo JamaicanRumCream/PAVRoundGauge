@@ -5,6 +5,12 @@
 //  Created by Chris Paveglio on 5/2/17.
 //  Copyright © 2017 Paveglio.com. All rights reserved.
 //
+//  An analog style guage like an automobile gauge such as speedometer,
+//  tachometer, fuel level, volts, etc.
+//  Has layers of images. The needle center defaults to the middle of the view
+//  which should be made perfectly square. Needle center can be offset vertically.
+//  Needle angle of Ø points downward. Will sweep clockwise when the animation value
+//  increases. Can be made to go from high value to a lower value and moves CCW.
 
 #import <UIKit/UIKit.h>
 @class PAVRoundGaugeView;
@@ -35,21 +41,11 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) UIImage *pointerImage;
 @property (nonatomic, strong) UIImage *frontBezelImage;
 
-/** The angle in degrees where the pointer can start, will be 0 if not set. */
-@property (nonatomic, assign) CGFloat minimumAngle;
-
-/** The angle in degrees where the pointer will stop and go no further, REQUIRED. */
-@property (nonatomic, assign) CGFloat maximumAngle;
-
-/** The maximum value the gauge can show; it should be a whole number
- such as 10 for max questions answered, or 550 for max speed points. */
-@property (nonatomic, assign) CGFloat maximumValue;
-
 /** Pointers whose center is not the center of the entire gauge
  offset the pointer center. 0.5 is center, 0 is top of gauge, 1 is bottom of gauge. */
 @property (nonatomic, assign) CGFloat pointerAxisOffset;
 
-- (void)setupGaugeWithStartingNumber:(NSUInteger)startingNumber animationStyle:(PAVRoundGaugeViewAnimationStyle)animationStyle;
+- (void)setupGaugeWithStartingNumber:(NSUInteger)startingNumber maxValue:(CGFloat)maximumValue minAngle:(CGFloat)minimumAngle maxAngle:(CGFloat)maximumAngle animationStyle:(PAVRoundGaugeViewAnimationStyle)animationStyle;
 
 /** Animates to the new number, as long as it is higher than current number, and returns with the given identifier */
 - (void)animateToNumber:(NSUInteger)newNumber identifier:(NSString *)idenfifier;

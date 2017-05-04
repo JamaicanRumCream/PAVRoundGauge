@@ -25,21 +25,18 @@
 
     [self.gaugeView setBackgroundImage:[UIImage imageNamed:@"GaugeBackground"]];
     [self.gaugeView setPointerImage:[UIImage imageNamed:@"GaugePointer"]];
+    [self.gaugeView setDelegate:self];
+
     
-    // nearly full sweep 
-    [self.gaugeView setMinimumAngle:45.0];
-    [self.gaugeView setMaximumAngle:315.0];
+    // nearly full sweep like speedo/tach
+//    [self.gaugeView setupGaugeWithStartingNumber:0 maxValue:10 minAngle:45 maxAngle:315 animationStyle:PAVRoundGaugeViewAnimationStyleRevUp];
+    
+    [self.gaugeView setupGaugeWithStartingNumber:3 maxValue:10 minAngle:45 maxAngle:315 animationStyle:PAVRoundGaugeViewAnimationStylePegged];
+    
     
     // a high offset fuel guage
-//    [self.gaugeView setMinimumAngle:135.0];
-//    [self.gaugeView setMaximumAngle:225.0];
 //    [self.gaugeView setPointerAxisOffset:0.66];
-    
-    [self.gaugeView setMaximumValue:10];
-    [self.gaugeView setDelegate:self];
-    
-    // set animation style here
-    [self.gaugeView setupGaugeWithStartingNumber:0 animationStyle:PAVRoundGaugeViewAnimationStyleRevUp];
+//    [self.gaugeView setupGaugeWithStartingNumber:0 maxValue:10 minAngle:135 maxAngle:225 animationStyle:PAVRoundGaugeViewAnimationStyleSmooth];
 }
 
 

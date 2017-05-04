@@ -22,12 +22,24 @@ float PAVGaugeDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI /
 @property (nonatomic, strong) UIImageView *pointerView;
 @property (nonatomic, strong) UIImageView *frontBezelImageView;
 
+/** The angle in degrees where the pointer can start, will be 0 if not set. */
+@property (nonatomic, assign) CGFloat minimumAngle;
+
+/** The angle in degrees where the pointer will stop and go no further, REQUIRED. */
+@property (nonatomic, assign) CGFloat maximumAngle;
+
+/** The maximum value the gauge can show; it should be a whole number
+ such as 10 for max questions answered, or 550 for max speed points.
+ MUST ALWAYS be set after the angle values are set! */
+@property (nonatomic, assign) CGFloat maximumValue;
+
 /** Value that defines the # of angle degress for each whole number value that will be animated */
 @property (nonatomic, assign) CGFloat degreesPerPoint;
 
+/** Number of the starting value, for example fuel guage starts at half and then increased */
 @property (nonatomic, assign) NSUInteger startingNumber;
 
-/** name of the animation */
+/** Name of the animation */
 @property (nonatomic, strong) NSString *identifier;
 
 @end
@@ -71,9 +83,16 @@ float PAVGaugeDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI /
     [self setClipsToBounds:YES];
 }
 
-- (void)setupGaugeWithStartingNumber:(NSUInteger)startingNumber animationStyle:(PAVRoundGaugeViewAnimationStyle)animationStyle {
-    _animationStyle = animationStyle;
+- (void)setupGaugeWithStartingNumber:(NSUInteger)startingNumber maxValue:(CGFloat)maximumValue minAngle:(CGFloat)minimumAngle maxAngle:(CGFloat)maximumAngle animationStyle:(PAVRoundGaugeViewAnimationStyle)animationStyle {
+    
     _startingNumber = startingNumber;
+    _animationStyle = animationStyle;
+    
+    [self setMinimumAngle:minimumAngle];
+    [self setMaximumAngle:maximumAngle];
+    // maxValue MUST ALWAYS be set AFTER ANGLES
+    [self setMaximumValue:maximumValue];
+    
     // add the start number value to the minAngle so it's offset
     CGFloat degreesToOffset = ((self.maximumAngle - self.minimumAngle) / self.maximumValue) * (CGFloat)startingNumber;
     self.minimumAngle += degreesToOffset;
@@ -120,6 +139,13 @@ float PAVGaugeDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI /
             break;
     }
     
+    // set delegate so we can fire animationDidStop
+    animation.delegate = self;
+    animation.cumulative = YES;
+    animation.repeatCount = 1;
+    animation.removedOnCompletion = NO;
+    animation.fillMode = kCAFillModeForwards;
+    
     [self.pointerView.layer addAnimation:animation forKey:@"transform.rotation.z"];
 }
 
@@ -143,13 +169,7 @@ float PAVGaugeDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI /
     CAKeyframeAnimation* animation;
     animation = [CAKeyframeAnimation animationWithKeyPath:@"transform.rotation.z"];
     
-    // set delegate so we can fire animationDidStop
-    animation.delegate = self;
     animation.duration = 2.0;
-    animation.cumulative = YES;
-    animation.repeatCount = 1;
-    animation.removedOnCompletion = NO;
-    animation.fillMode = kCAFillModeForwards;
     
     animation.values = @[[NSNumber numberWithFloat:PAVGaugeDegreesToRadians(self.minimumAngle)],
                          [NSNumber numberWithFloat:PAVGaugeDegreesToRadians(halfDegreesToRotate)],
@@ -180,13 +200,7 @@ float PAVGaugeDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI /
     CAKeyframeAnimation* animation;
     animation = [CAKeyframeAnimation animationWithKeyPath:@"transform.rotation.z"];
     
-    // set delegate so we can fire animationDidStop
-    animation.delegate = self;
     animation.duration = 1.5;
-    animation.cumulative = YES;
-    animation.repeatCount = 1;
-    animation.removedOnCompletion = NO;
-    animation.fillMode = kCAFillModeForwards;
     
     // 15 values
     animation.values = @[[NSNumber numberWithFloat:PAVGaugeDegreesToRadians(self.minimumAngle)],
@@ -243,7 +257,7 @@ float PAVGaugeDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI /
     return animation;
 }
 
-/** Animation where the needle goes from 0 to max smootly */
+/** Animation where the needle goes from 0 to max smoothly */
 - (CAKeyframeAnimation *)smoothAnimationForNumber:(NSUInteger)newNumber {
     CGFloat halfDegreesToRotate = [self degreesFromMinimumAngleForNumber:newNumber multiplier:0.5];
     CGFloat fullDegreesToRotate = [self degreesFromMinimumAngleForNumber:newNumber multiplier:1.0];
@@ -251,13 +265,7 @@ float PAVGaugeDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI /
     CAKeyframeAnimation* animation;
     animation = [CAKeyframeAnimation animationWithKeyPath:@"transform.rotation.z"];
     
-    // set delegate so we can fire animationDidStop
-    animation.delegate = self;
     animation.duration = 2.0;
-    animation.cumulative = YES;
-    animation.repeatCount = 1;
-    animation.removedOnCompletion = NO;
-    animation.fillMode = kCAFillModeForwards;
     
     animation.values = @[[NSNumber numberWithFloat:PAVGaugeDegreesToRadians(self.minimumAngle)],
                          [NSNumber numberWithFloat:PAVGaugeDegreesToRadians(halfDegreesToRotate)],
@@ -296,10 +304,12 @@ float PAVGaugeDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI /
 #pragma mark - Property Overrides / Setters
 
 - (void)setMaximumValue:(CGFloat)maximumValue {
+    // IMPORTANT: Always be sure angle values are set before calling this setter
     _maximumValue = maximumValue;
-    if (maximumValue == 0) {
-        NSAssert(maximumValue == 0, @"Attempting to set maximumValue at 0 which will cause Ø division.");
-    }
+    
+    NSAssert(maximumValue != 0, @"🚫 Attempting to set maximumValue at 0 which will cause Ø division.");
+    NSAssert(self.maximumAngle > 0, @"🚫 maximumAngle is 0 and should be greater than Ø.");
+    
     self.degreesPerPoint = (self.maximumAngle - self.minimumAngle) / _maximumValue;
 }
 
