@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5F3BCC991EB951090001FB26"
-               BuildableName = "PAVRoundGuage.app"
-               BlueprintName = "PAVRoundGuage"
-               ReferencedContainer = "container:PAVRoundGuage.xcodeproj">
+               BuildableName = "PAVRoundGauge.app"
+               BlueprintName = "PAVRoundGauge"
+               ReferencedContainer = "container:PAVRoundGauge.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5F3BCC991EB951090001FB26"
-            BuildableName = "PAVRoundGuage.app"
-            BlueprintName = "PAVRoundGuage"
-            ReferencedContainer = "container:PAVRoundGuage.xcodeproj">
+            BuildableName = "PAVRoundGauge.app"
+            BlueprintName = "PAVRoundGauge"
+            ReferencedContainer = "container:PAVRoundGauge.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -56,9 +56,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5F3BCC991EB951090001FB26"
-            BuildableName = "PAVRoundGuage.app"
-            BlueprintName = "PAVRoundGuage"
-            ReferencedContainer = "container:PAVRoundGuage.xcodeproj">
+            BuildableName = "PAVRoundGauge.app"
+            BlueprintName = "PAVRoundGauge"
+            ReferencedContainer = "container:PAVRoundGauge.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -75,9 +75,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5F3BCC991EB951090001FB26"
-            BuildableName = "PAVRoundGuage.app"
-            BlueprintName = "PAVRoundGuage"
-            ReferencedContainer = "container:PAVRoundGuage.xcodeproj">
+            BuildableName = "PAVRoundGauge.app"
+            BlueprintName = "PAVRoundGauge"
+            ReferencedContainer = "container:PAVRoundGauge.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

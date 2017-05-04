@@ -1,20 +1,20 @@
 //
-//  PAVRoundGuageView.m
-//  PAVRoundGuage
+//  PAVRoundGaugeView.m
+//  PAVRoundGauge
 //
 //  Created by Chris Paveglio on 5/2/17.
 //  Copyright © 2017 Paveglio.com. All rights reserved.
 //
 
-#import "PAVRoundGuageView.h"
+#import "PAVRoundGaugeView.h"
 
 /** This starts 0 degrees at bottom of circle, 180 is pointing upward */
-float PAVGuageDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI / 180); };
+float PAVGaugeDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI / 180); };
 
 
-@interface PAVRoundGuageView () <CAAnimationDelegate>
+@interface PAVRoundGaugeView () <CAAnimationDelegate>
 
-@property (nonatomic, assign) PAVRoundGuageViewAnimationStyle animationStyle;
+@property (nonatomic, assign) PAVRoundGaugeViewAnimationStyle animationStyle;
 
 @property (nonatomic, strong) UIImageView *backgroundView;
 @property (nonatomic, strong) UIImageView *sweptAreaMaskImageView;
@@ -31,7 +31,7 @@ float PAVGuageDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI /
 @end
 
 
-@implementation PAVRoundGuageView
+@implementation PAVRoundGaugeView
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -51,11 +51,11 @@ float PAVGuageDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI /
 
 /** Setup put the pieces in position but can't set the images until the setters take care of them */
 - (void)setup {
-    self.backgroundView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))];
-    self.sweptAreaMaskImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))];
+    self.backgroundView             = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))];
+    self.sweptAreaMaskImageView     = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))];
     self.numberAndTickmarkImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))];
-    self.pointerView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))];
-    self.frontBezelImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))];
+    self.pointerView                = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))];
+    self.frontBezelImageView        = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))];
     
     for (UIImageView *aView in @[self.backgroundView, self.sweptAreaMaskImageView, self.numberAndTickmarkImageView, self.pointerView, self.frontBezelImageView]) {
         aView.contentMode = UIViewContentModeScaleAspectFill;
@@ -63,17 +63,17 @@ float PAVGuageDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI /
     }
     
     //rotate the view to it's initial "start angle" state
-    CGAffineTransform pointerTransform = CGAffineTransformRotate(CGAffineTransformIdentity, PAVGuageDegreesToRadians(0.0));
+    CGAffineTransform pointerTransform = CGAffineTransformRotate(CGAffineTransformIdentity, PAVGaugeDegreesToRadians(0.0));
     [self.pointerView setTransform:pointerTransform];
     
     [self setClipsToBounds:YES];
 }
 
-- (void)setupGuageWithStartingNumber:(NSUInteger)startingNumber animationStyle:(PAVRoundGuageViewAnimationStyle)animationStyle {
+- (void)setupGaugeWithStartingNumber:(NSUInteger)startingNumber animationStyle:(PAVRoundGaugeViewAnimationStyle)animationStyle {
     _animationStyle = animationStyle;
     
     // rotate the pointer to it's minimum (real-life/visual) state
-    CGAffineTransform pointerTransform = CGAffineTransformRotate(CGAffineTransformIdentity, PAVGuageDegreesToRadians(self.minimumAngle));
+    CGAffineTransform pointerTransform = CGAffineTransformRotate(CGAffineTransformIdentity, PAVGaugeDegreesToRadians(self.minimumAngle));
     [self.pointerView setTransform:pointerTransform];
 }
 
@@ -96,8 +96,8 @@ float PAVGuageDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI /
 }
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
-    if (flag && [self.delegate respondsToSelector:@selector(pavRoundGuageView:didCompleteWithIdentifier:)]) {
-        [self.delegate pavRoundGuageView:self didCompleteWithIdentifier:self.identifier];
+    if (flag && [self.delegate respondsToSelector:@selector(pavRoundGaugeView:didCompleteWithIdentifier:)]) {
+        [self.delegate pavRoundGaugeView:self didCompleteWithIdentifier:self.identifier];
     }
 }
 
@@ -125,10 +125,10 @@ float PAVGuageDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI /
     animation.removedOnCompletion = NO;
     animation.fillMode = kCAFillModeForwards;
     
-    animation.values = @[[NSNumber numberWithFloat:PAVGuageDegreesToRadians(self.minimumAngle)],
-                         [NSNumber numberWithFloat:PAVGuageDegreesToRadians(halfDegreesToRotate)],
-                         [NSNumber numberWithFloat:PAVGuageDegreesToRadians(overRevDegreesToRotate)],
-                         [NSNumber numberWithFloat:PAVGuageDegreesToRadians(fullDegreesToRotate)],
+    animation.values = @[[NSNumber numberWithFloat:PAVGaugeDegreesToRadians(self.minimumAngle)],
+                         [NSNumber numberWithFloat:PAVGaugeDegreesToRadians(halfDegreesToRotate)],
+                         [NSNumber numberWithFloat:PAVGaugeDegreesToRadians(overRevDegreesToRotate)],
+                         [NSNumber numberWithFloat:PAVGaugeDegreesToRadians(fullDegreesToRotate)],
                          ];
     
     animation.keyTimes = @[[NSNumber numberWithFloat:0.0],
@@ -163,21 +163,21 @@ float PAVGuageDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI /
     animation.fillMode = kCAFillModeForwards;
     
     // 15 values
-    animation.values = @[[NSNumber numberWithFloat:PAVGuageDegreesToRadians(self.minimumAngle)],
-                         [NSNumber numberWithFloat:PAVGuageDegreesToRadians(halfDegreesToRotate)],
-                         [NSNumber numberWithFloat:PAVGuageDegreesToRadians([self degreesFromMinimumAngleForNumber:newNumber multiplier:1.1])],
-                         [NSNumber numberWithFloat:PAVGuageDegreesToRadians([self degreesFromMinimumAngleForNumber:newNumber multiplier:0.9])],
-                         [NSNumber numberWithFloat:PAVGuageDegreesToRadians([self degreesFromMinimumAngleForNumber:newNumber multiplier:1.068])],
-                         [NSNumber numberWithFloat:PAVGuageDegreesToRadians([self degreesFromMinimumAngleForNumber:newNumber multiplier:0.935])],
-                         [NSNumber numberWithFloat:PAVGuageDegreesToRadians([self degreesFromMinimumAngleForNumber:newNumber multiplier:1.045])],
-                         [NSNumber numberWithFloat:PAVGuageDegreesToRadians([self degreesFromMinimumAngleForNumber:newNumber multiplier:0.965])],
-                         [NSNumber numberWithFloat:PAVGuageDegreesToRadians([self degreesFromMinimumAngleForNumber:newNumber multiplier:1.030])],
-                         [NSNumber numberWithFloat:PAVGuageDegreesToRadians([self degreesFromMinimumAngleForNumber:newNumber multiplier:0.979])],
-                         [NSNumber numberWithFloat:PAVGuageDegreesToRadians([self degreesFromMinimumAngleForNumber:newNumber multiplier:1.018])],
-                         [NSNumber numberWithFloat:PAVGuageDegreesToRadians([self degreesFromMinimumAngleForNumber:newNumber multiplier:0.985])],
-                         [NSNumber numberWithFloat:PAVGuageDegreesToRadians([self degreesFromMinimumAngleForNumber:newNumber multiplier:1.012])],
-                         [NSNumber numberWithFloat:PAVGuageDegreesToRadians([self degreesFromMinimumAngleForNumber:newNumber multiplier:0.990])],
-                         [NSNumber numberWithFloat:PAVGuageDegreesToRadians(fullDegreesToRotate)],
+    animation.values = @[[NSNumber numberWithFloat:PAVGaugeDegreesToRadians(self.minimumAngle)],
+                         [NSNumber numberWithFloat:PAVGaugeDegreesToRadians(halfDegreesToRotate)],
+                         [NSNumber numberWithFloat:PAVGaugeDegreesToRadians([self degreesFromMinimumAngleForNumber:newNumber multiplier:1.1])],
+                         [NSNumber numberWithFloat:PAVGaugeDegreesToRadians([self degreesFromMinimumAngleForNumber:newNumber multiplier:0.9])],
+                         [NSNumber numberWithFloat:PAVGaugeDegreesToRadians([self degreesFromMinimumAngleForNumber:newNumber multiplier:1.068])],
+                         [NSNumber numberWithFloat:PAVGaugeDegreesToRadians([self degreesFromMinimumAngleForNumber:newNumber multiplier:0.935])],
+                         [NSNumber numberWithFloat:PAVGaugeDegreesToRadians([self degreesFromMinimumAngleForNumber:newNumber multiplier:1.045])],
+                         [NSNumber numberWithFloat:PAVGaugeDegreesToRadians([self degreesFromMinimumAngleForNumber:newNumber multiplier:0.965])],
+                         [NSNumber numberWithFloat:PAVGaugeDegreesToRadians([self degreesFromMinimumAngleForNumber:newNumber multiplier:1.030])],
+                         [NSNumber numberWithFloat:PAVGaugeDegreesToRadians([self degreesFromMinimumAngleForNumber:newNumber multiplier:0.979])],
+                         [NSNumber numberWithFloat:PAVGaugeDegreesToRadians([self degreesFromMinimumAngleForNumber:newNumber multiplier:1.018])],
+                         [NSNumber numberWithFloat:PAVGaugeDegreesToRadians([self degreesFromMinimumAngleForNumber:newNumber multiplier:0.985])],
+                         [NSNumber numberWithFloat:PAVGaugeDegreesToRadians([self degreesFromMinimumAngleForNumber:newNumber multiplier:1.012])],
+                         [NSNumber numberWithFloat:PAVGaugeDegreesToRadians([self degreesFromMinimumAngleForNumber:newNumber multiplier:0.990])],
+                         [NSNumber numberWithFloat:PAVGaugeDegreesToRadians(fullDegreesToRotate)],
                          ];
     
     animation.keyTimes = @[[NSNumber numberWithFloat:0.0],
@@ -233,9 +233,9 @@ float PAVGuageDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI /
     animation.removedOnCompletion = NO;
     animation.fillMode = kCAFillModeForwards;
     
-    animation.values = @[[NSNumber numberWithFloat:PAVGuageDegreesToRadians(self.minimumAngle)],
-                         [NSNumber numberWithFloat:PAVGuageDegreesToRadians(halfDegreesToRotate)],
-                         [NSNumber numberWithFloat:PAVGuageDegreesToRadians(fullDegreesToRotate)],
+    animation.values = @[[NSNumber numberWithFloat:PAVGaugeDegreesToRadians(self.minimumAngle)],
+                         [NSNumber numberWithFloat:PAVGaugeDegreesToRadians(halfDegreesToRotate)],
+                         [NSNumber numberWithFloat:PAVGaugeDegreesToRadians(fullDegreesToRotate)],
                          ];
     
     animation.keyTimes = @[[NSNumber numberWithFloat:0.0],
@@ -261,7 +261,7 @@ float PAVGuageDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI /
 - (void)resetPointerPosition {
     [self.pointerView.layer removeAllAnimations];
     
-    CGAffineTransform pointerTransform = CGAffineTransformRotate(CGAffineTransformIdentity, PAVGuageDegreesToRadians(self.minimumAngle));
+    CGAffineTransform pointerTransform = CGAffineTransformRotate(CGAffineTransformIdentity, PAVGaugeDegreesToRadians(self.minimumAngle));
     [self.pointerView setTransform:pointerTransform];
 }
 

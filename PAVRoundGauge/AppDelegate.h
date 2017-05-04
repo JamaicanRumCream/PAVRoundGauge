@@ -1,6 +1,6 @@
 //
 //  AppDelegate.h
-//  PAVRoundGuage
+//  PAVRoundGauge
 //
 //  Created by Chris Paveglio on 5/2/17.
 //  Copyright © 2017 Paveglio.com. All rights reserved.

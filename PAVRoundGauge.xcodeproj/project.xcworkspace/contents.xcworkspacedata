@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:PAVRoundGuage.xcodeproj">
+      location = "self:/Users/paveglioc/Dev/CDNA/PAVRoundGauge/PAVRoundGauge.xcodeproj">
    </FileRef>
 </Workspace>

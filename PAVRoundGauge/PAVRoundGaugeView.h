@@ -1,33 +1,33 @@
 //
-//  PAVRoundGuageView.h
-//  PAVRoundGuage
+//  PAVRoundGaugeView.h
+//  PAVRoundGauge
 //
 //  Created by Chris Paveglio on 5/2/17.
 //  Copyright © 2017 Paveglio.com. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-@class PAVRoundGuageView;
+@class PAVRoundGaugeView;
 
 
 typedef enum : NSUInteger {
-    PAVRoundGuageViewAnimationStyleRevUp,
-    PAVRoundGuageViewAnimationStyleSmooth,
-    PAVRoundGuageViewAnimationStylePegged,
-} PAVRoundGuageViewAnimationStyle;
+    PAVRoundGaugeViewAnimationStyleRevUp,
+    PAVRoundGaugeViewAnimationStyleSmooth,
+    PAVRoundGaugeViewAnimationStylePegged,
+} PAVRoundGaugeViewAnimationStyle;
 
 
-@protocol pavRoundGuageViewDelegate <NSObject>
+@protocol pavRoundGaugeViewDelegate <NSObject>
 
 @optional
-- (void)pavRoundGuageView:(PAVRoundGuageView *)guageView didCompleteWithIdentifier:(NSString *)identifier;
+- (void)pavRoundGaugeView:(PAVRoundGaugeView *)gaugeView didCompleteWithIdentifier:(NSString *)identifier;
 
 @end
 
 
-@interface PAVRoundGuageView : UIView
+@interface PAVRoundGaugeView : UIView
 
-@property (nonatomic, strong) id<pavRoundGuageViewDelegate> delegate;
+@property (nonatomic, strong) id<pavRoundGaugeViewDelegate> delegate;
 
 @property (nonatomic, strong) UIImage *backgroundImage;
 @property (nonatomic, strong) UIImage *sweptAreaMaskImage;
@@ -41,15 +41,15 @@ typedef enum : NSUInteger {
 /** The angle in degrees where the pointer will stop and go no further, can be empty */
 @property (nonatomic, assign) CGFloat maximumAngle;
 
-/** The maximum value the guage can show; it should be a whole number
+/** The maximum value the gauge can show; it should be a whole number
  such as 10 for max questions answered, or 550 for max speed points */
 @property (nonatomic, assign) CGFloat maximumValue;
 
-/** Pointers whose center is not the center of the entire guage
- offset the pointer center. 0.5 is center, 0 is bottom of guage, 1 is top of guage */
+/** Pointers whose center is not the center of the entire gauge
+ offset the pointer center. 0.5 is center, 0 is bottom of gauge, 1 is top of gauge */
 @property (nonatomic, assign) CGFloat pointerAxisOffset;
 
-- (void)setupGuageWithStartingNumber:(NSUInteger)startingNumber animationStyle:(PAVRoundGuageViewAnimationStyle)animationStyle;
+- (void)setupGaugeWithStartingNumber:(NSUInteger)startingNumber animationStyle:(PAVRoundGaugeViewAnimationStyle)animationStyle;
 
 /** Animates to the new number, as long as it is higher than current number, and returns with the given identifier */
 - (void)animateToNumber:(NSUInteger)newNumber identifier:(NSString *)idenfifier;

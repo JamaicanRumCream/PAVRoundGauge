@@ -13,26 +13,26 @@
 		5F3BCCA81EB951090001FB26 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F3BCCA61EB951090001FB26 /* Main.storyboard */; };
 		5F3BCCAA1EB951090001FB26 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F3BCCA91EB951090001FB26 /* Assets.xcassets */; };
 		5F3BCCAD1EB951090001FB26 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F3BCCAB1EB951090001FB26 /* LaunchScreen.storyboard */; };
-		5F3BCCB61EB9512A0001FB26 /* PAVRoundGuageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3BCCB51EB9512A0001FB26 /* PAVRoundGuageView.m */; };
-		5F3BCCBA1EB95CE10001FB26 /* GuageBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F3BCCB81EB95CE10001FB26 /* GuageBackground.png */; };
-		5F3BCCBB1EB95CE10001FB26 /* GuagePointer.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F3BCCB91EB95CE10001FB26 /* GuagePointer.png */; };
+		5F3BCCB61EB9512A0001FB26 /* PAVRoundGaugeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3BCCB51EB9512A0001FB26 /* PAVRoundGaugeView.m */; };
+		5F3BCCBA1EB95CE10001FB26 /* GaugeBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F3BCCB81EB95CE10001FB26 /* GaugeBackground.png */; };
+		5F3BCCBB1EB95CE10001FB26 /* GaugePointer.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F3BCCB91EB95CE10001FB26 /* GaugePointer.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5F3BCC9A1EB951090001FB26 /* PAVRoundGuage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PAVRoundGuage.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		5F3BCC9E1EB951090001FB26 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		5F3BCCA01EB951090001FB26 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		5F3BCCA11EB951090001FB26 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		5F3BCC9A1EB951090001FB26 /* PAVRoundGauge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PAVRoundGauge.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5F3BCC9E1EB951090001FB26 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = main.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		5F3BCCA01EB951090001FB26 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AppDelegate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		5F3BCCA11EB951090001FB26 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5F3BCCA31EB951090001FB26 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		5F3BCCA41EB951090001FB26 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		5F3BCCA71EB951090001FB26 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5F3BCCA91EB951090001FB26 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5F3BCCAC1EB951090001FB26 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5F3BCCAE1EB951090001FB26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5F3BCCB41EB9512A0001FB26 /* PAVRoundGuageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PAVRoundGuageView.h; sourceTree = "<group>"; };
-		5F3BCCB51EB9512A0001FB26 /* PAVRoundGuageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PAVRoundGuageView.m; sourceTree = "<group>"; };
-		5F3BCCB81EB95CE10001FB26 /* GuageBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = GuageBackground.png; path = Graphics/GuageBackground.png; sourceTree = "<group>"; };
-		5F3BCCB91EB95CE10001FB26 /* GuagePointer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = GuagePointer.png; path = Graphics/GuagePointer.png; sourceTree = "<group>"; };
+		5F3BCCB41EB9512A0001FB26 /* PAVRoundGaugeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PAVRoundGaugeView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		5F3BCCB51EB9512A0001FB26 /* PAVRoundGaugeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PAVRoundGaugeView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		5F3BCCB81EB95CE10001FB26 /* GaugeBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = GaugeBackground.png; path = Graphics/GaugeBackground.png; sourceTree = "<group>"; };
+		5F3BCCB91EB95CE10001FB26 /* GaugePointer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = GaugePointer.png; path = Graphics/GaugePointer.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,7 +49,7 @@
 		5F3BCC911EB951090001FB26 = {
 			isa = PBXGroup;
 			children = (
-				5F3BCC9C1EB951090001FB26 /* PAVRoundGuage */,
+				5F3BCC9C1EB951090001FB26 /* PAVRoundGauge */,
 				5F3BCC9B1EB951090001FB26 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -57,16 +57,16 @@
 		5F3BCC9B1EB951090001FB26 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5F3BCC9A1EB951090001FB26 /* PAVRoundGuage.app */,
+				5F3BCC9A1EB951090001FB26 /* PAVRoundGauge.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		5F3BCC9C1EB951090001FB26 /* PAVRoundGuage */ = {
+		5F3BCC9C1EB951090001FB26 /* PAVRoundGauge */ = {
 			isa = PBXGroup;
 			children = (
-				5F3BCCB41EB9512A0001FB26 /* PAVRoundGuageView.h */,
-				5F3BCCB51EB9512A0001FB26 /* PAVRoundGuageView.m */,
+				5F3BCCB41EB9512A0001FB26 /* PAVRoundGaugeView.h */,
+				5F3BCCB51EB9512A0001FB26 /* PAVRoundGaugeView.m */,
 				5F3BCCA01EB951090001FB26 /* AppDelegate.h */,
 				5F3BCCA11EB951090001FB26 /* AppDelegate.m */,
 				5F3BCCA31EB951090001FB26 /* ViewController.h */,
@@ -78,7 +78,7 @@
 				5F3BCCB71EB95CCC0001FB26 /* Graphics */,
 				5F3BCC9D1EB951090001FB26 /* Supporting Files */,
 			);
-			path = PAVRoundGuage;
+			path = PAVRoundGauge;
 			sourceTree = "<group>";
 		};
 		5F3BCC9D1EB951090001FB26 /* Supporting Files */ = {
@@ -92,8 +92,8 @@
 		5F3BCCB71EB95CCC0001FB26 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
-				5F3BCCB81EB95CE10001FB26 /* GuageBackground.png */,
-				5F3BCCB91EB95CE10001FB26 /* GuagePointer.png */,
+				5F3BCCB81EB95CE10001FB26 /* GaugeBackground.png */,
+				5F3BCCB91EB95CE10001FB26 /* GaugePointer.png */,
 			);
 			name = Graphics;
 			sourceTree = "<group>";
@@ -101,9 +101,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5F3BCC991EB951090001FB26 /* PAVRoundGuage */ = {
+		5F3BCC991EB951090001FB26 /* PAVRoundGauge */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5F3BCCB11EB951090001FB26 /* Build configuration list for PBXNativeTarget "PAVRoundGuage" */;
+			buildConfigurationList = 5F3BCCB11EB951090001FB26 /* Build configuration list for PBXNativeTarget "PAVRoundGauge" */;
 			buildPhases = (
 				5F3BCC961EB951090001FB26 /* Sources */,
 				5F3BCC971EB951090001FB26 /* Frameworks */,
@@ -113,9 +113,9 @@
 			);
 			dependencies = (
 			);
-			name = PAVRoundGuage;
+			name = PAVRoundGauge;
 			productName = PAVRoundGuage;
-			productReference = 5F3BCC9A1EB951090001FB26 /* PAVRoundGuage.app */;
+			productReference = 5F3BCC9A1EB951090001FB26 /* PAVRoundGauge.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -129,12 +129,12 @@
 				TargetAttributes = {
 					5F3BCC991EB951090001FB26 = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = X6X8KN4ENZ;
+						DevelopmentTeam = 9J2YYDSNEB;
 						ProvisioningStyle = Automatic;
 					};
 				};
 			};
-			buildConfigurationList = 5F3BCC951EB951090001FB26 /* Build configuration list for PBXProject "PAVRoundGuage" */;
+			buildConfigurationList = 5F3BCC951EB951090001FB26 /* Build configuration list for PBXProject "PAVRoundGauge" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -147,7 +147,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				5F3BCC991EB951090001FB26 /* PAVRoundGuage */,
+				5F3BCC991EB951090001FB26 /* PAVRoundGauge */,
 			);
 		};
 /* End PBXProject section */
@@ -159,9 +159,9 @@
 			files = (
 				5F3BCCAD1EB951090001FB26 /* LaunchScreen.storyboard in Resources */,
 				5F3BCCAA1EB951090001FB26 /* Assets.xcassets in Resources */,
-				5F3BCCBB1EB95CE10001FB26 /* GuagePointer.png in Resources */,
+				5F3BCCBB1EB95CE10001FB26 /* GaugePointer.png in Resources */,
 				5F3BCCA81EB951090001FB26 /* Main.storyboard in Resources */,
-				5F3BCCBA1EB95CE10001FB26 /* GuageBackground.png in Resources */,
+				5F3BCCBA1EB95CE10001FB26 /* GaugeBackground.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,7 +173,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5F3BCCA51EB951090001FB26 /* ViewController.m in Sources */,
-				5F3BCCB61EB9512A0001FB26 /* PAVRoundGuageView.m in Sources */,
+				5F3BCCB61EB9512A0001FB26 /* PAVRoundGaugeView.m in Sources */,
 				5F3BCCA21EB951090001FB26 /* AppDelegate.m in Sources */,
 				5F3BCC9F1EB951090001FB26 /* main.m in Sources */,
 			);
@@ -297,10 +297,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = X6X8KN4ENZ;
-				INFOPLIST_FILE = PAVRoundGuage/Info.plist;
+				DEVELOPMENT_TEAM = 9J2YYDSNEB;
+				INFOPLIST_FILE = PAVRoundGauge/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.accuweather.PAVRoundGuage;
+				PRODUCT_BUNDLE_IDENTIFIER = com.accuweather.PAVRoundGauge;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -309,10 +309,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = X6X8KN4ENZ;
-				INFOPLIST_FILE = PAVRoundGuage/Info.plist;
+				DEVELOPMENT_TEAM = 9J2YYDSNEB;
+				INFOPLIST_FILE = PAVRoundGauge/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.accuweather.PAVRoundGuage;
+				PRODUCT_BUNDLE_IDENTIFIER = com.accuweather.PAVRoundGauge;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -320,7 +320,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5F3BCC951EB951090001FB26 /* Build configuration list for PBXProject "PAVRoundGuage" */ = {
+		5F3BCC951EB951090001FB26 /* Build configuration list for PBXProject "PAVRoundGauge" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5F3BCCAF1EB951090001FB26 /* Debug */,
@@ -329,7 +329,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5F3BCCB11EB951090001FB26 /* Build configuration list for PBXNativeTarget "PAVRoundGuage" */ = {
+		5F3BCCB11EB951090001FB26 /* Build configuration list for PBXNativeTarget "PAVRoundGauge" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5F3BCCB21EB951090001FB26 /* Debug */,
