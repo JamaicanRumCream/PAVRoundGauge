@@ -88,8 +88,9 @@ float PAVGuageDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI /
     
     CALayer* layer = self.pointerView.layer;
     
-    //CAKeyframeAnimation *animation = [self revUpAnimationForNumber:newNumber];
+//    CAKeyframeAnimation *animation = [self revUpAnimationForNumber:newNumber];
     CAKeyframeAnimation *animation = [self peggedAnimationForNumber:newNumber];
+//    CAKeyframeAnimation *animation = [self smoothAnimationForNumber:newNumber];
     
     [layer addAnimation:animation forKey:@"transform.rotation.z"];
 }
@@ -100,15 +101,18 @@ float PAVGuageDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI /
     }
 }
 
+/** Calculate degrees given the integer value and a multiplier */
+- (CGFloat)degreesFromMinimumAngleForNumber:(NSUInteger)newNumber multiplier:(CGFloat)multiplier {
+    CGFloat degreesToRotate = self.degreesPerPoint * (CGFloat)newNumber * multiplier;
+    degreesToRotate += self.minimumAngle;
+    return degreesToRotate;
+}
+
 /** Animation where the needle goes farther than the final resting number momentarily */
 - (CAKeyframeAnimation *)revUpAnimationForNumber:(NSUInteger)newNumber {
-    CGFloat halfDegreesToRotate = self.degreesPerPoint * (CGFloat)newNumber * 0.5;
-    CGFloat fullDegreesToRotate = self.degreesPerPoint * (CGFloat)newNumber;
-    halfDegreesToRotate += self.minimumAngle;
-    fullDegreesToRotate += self.minimumAngle;
-    
-    CGFloat overRevDegreesToRotate = self.degreesPerPoint * (CGFloat)newNumber * 1.1;
-    overRevDegreesToRotate += self.minimumAngle;
+    CGFloat halfDegreesToRotate = [self degreesFromMinimumAngleForNumber:newNumber multiplier:0.5];
+    CGFloat fullDegreesToRotate = [self degreesFromMinimumAngleForNumber:newNumber multiplier:1.0];
+    CGFloat overRevDegreesToRotate = [self degreesFromMinimumAngleForNumber:newNumber multiplier:1.1];
     
     CAKeyframeAnimation* animation;
     animation = [CAKeyframeAnimation animationWithKeyPath:@"transform.rotation.z"];
@@ -128,8 +132,8 @@ float PAVGuageDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI /
                          ];
     
     animation.keyTimes = @[[NSNumber numberWithFloat:0.0],
-                           [NSNumber numberWithFloat:0.4],
-                           [NSNumber numberWithFloat:0.8],
+                           [NSNumber numberWithFloat:0.3],
+                           [NSNumber numberWithFloat:0.7],
                            [NSNumber numberWithFloat:1.0],
                            ];
     
@@ -141,12 +145,7 @@ float PAVGuageDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI /
     return animation;
 }
 
-- (CGFloat)degreesFromMinimumAngleForNumber:(NSUInteger)newNumber multiplier:(CGFloat)multiplier {
-    CGFloat degreesToRotate = self.degreesPerPoint * (CGFloat)newNumber * multiplier;
-    degreesToRotate += self.minimumAngle;
-    return degreesToRotate;
-}
-
+/** Animation where the needle goes almost instantly to the value then has a little springy wiggle */
 - (CAKeyframeAnimation *)peggedAnimationForNumber:(NSUInteger)newNumber {
     CGFloat halfDegreesToRotate = [self degreesFromMinimumAngleForNumber:newNumber multiplier:0.5];
     CGFloat fullDegreesToRotate = [self degreesFromMinimumAngleForNumber:newNumber multiplier:1.0];
@@ -157,7 +156,7 @@ float PAVGuageDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI /
     
     // set delegate so we can fire animationDidStop
     animation.delegate = self;
-    animation.duration = 1.0;
+    animation.duration = 1.5;
     animation.cumulative = YES;
     animation.repeatCount = 1;
     animation.removedOnCompletion = NO;
@@ -182,19 +181,19 @@ float PAVGuageDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI /
                          ];
     
     animation.keyTimes = @[[NSNumber numberWithFloat:0.0],
-                           [NSNumber numberWithFloat:0.018],
-                           [NSNumber numberWithFloat:0.036],
+                           [NSNumber numberWithFloat:0.027],
                            [NSNumber numberWithFloat:0.055],
                            [NSNumber numberWithFloat:0.074],
-                           [NSNumber numberWithFloat:0.101],
-                           [NSNumber numberWithFloat:0.129],
-                           [NSNumber numberWithFloat:0.170],
-                           [NSNumber numberWithFloat:0.221],
-                           [NSNumber numberWithFloat:0.295],
-                           [NSNumber numberWithFloat:0.370],
-                           [NSNumber numberWithFloat:0.483],
-                           [NSNumber numberWithFloat:0.610],
-                           [NSNumber numberWithFloat:0.720],
+                           [NSNumber numberWithFloat:0.092],
+                           [NSNumber numberWithFloat:0.120],
+                           [NSNumber numberWithFloat:0.148],
+                           [NSNumber numberWithFloat:0.185],
+                           [NSNumber numberWithFloat:0.240],
+                           [NSNumber numberWithFloat:0.314],
+                           [NSNumber numberWithFloat:0.387],
+                           [NSNumber numberWithFloat:0.501],
+                           [NSNumber numberWithFloat:0.627],
+                           [NSNumber numberWithFloat:0.740],
                            [NSNumber numberWithFloat:1.0],
                            ];
     
@@ -213,6 +212,39 @@ float PAVGuageDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI /
                                   [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear],
                                   [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear],
                                   [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]
+                                  ];
+    
+    return animation;
+}
+
+/** Animation where the needle goes from 0 to max smootly */
+- (CAKeyframeAnimation *)smoothAnimationForNumber:(NSUInteger)newNumber {
+    CGFloat halfDegreesToRotate = [self degreesFromMinimumAngleForNumber:newNumber multiplier:0.5];
+    CGFloat fullDegreesToRotate = [self degreesFromMinimumAngleForNumber:newNumber multiplier:1.0];
+    
+    CAKeyframeAnimation* animation;
+    animation = [CAKeyframeAnimation animationWithKeyPath:@"transform.rotation.z"];
+    
+    // set delegate so we can fire animationDidStop
+    animation.delegate = self;
+    animation.duration = 2.0;
+    animation.cumulative = YES;
+    animation.repeatCount = 1;
+    animation.removedOnCompletion = NO;
+    animation.fillMode = kCAFillModeForwards;
+    
+    animation.values = @[[NSNumber numberWithFloat:PAVGuageDegreesToRadians(self.minimumAngle)],
+                         [NSNumber numberWithFloat:PAVGuageDegreesToRadians(halfDegreesToRotate)],
+                         [NSNumber numberWithFloat:PAVGuageDegreesToRadians(fullDegreesToRotate)],
+                         ];
+    
+    animation.keyTimes = @[[NSNumber numberWithFloat:0.0],
+                           [NSNumber numberWithFloat:0.5],
+                           [NSNumber numberWithFloat:1.0],
+                           ];
+    
+    animation.timingFunctions = @[[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn],
+                                  [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut],
                                   ];
     
     return animation;
