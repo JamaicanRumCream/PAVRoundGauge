@@ -25,6 +25,8 @@ float PAVGaugeDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI /
 /** Value that defines the # of angle degress for each whole number value that will be animated */
 @property (nonatomic, assign) CGFloat degreesPerPoint;
 
+@property (nonatomic, assign) NSUInteger startingNumber;
+
 /** name of the animation */
 @property (nonatomic, strong) NSString *identifier;
 
@@ -71,44 +73,68 @@ float PAVGaugeDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI /
 
 - (void)setupGaugeWithStartingNumber:(NSUInteger)startingNumber animationStyle:(PAVRoundGaugeViewAnimationStyle)animationStyle {
     _animationStyle = animationStyle;
+    _startingNumber = startingNumber;
+    // add the start number value to the minAngle so it's offset
+    CGFloat degreesToOffset = ((self.maximumAngle - self.minimumAngle) / self.maximumValue) * (CGFloat)startingNumber;
+    self.minimumAngle += degreesToOffset;
     
     // rotate the pointer to it's minimum (real-life/visual) state
     CGAffineTransform pointerTransform = CGAffineTransformRotate(CGAffineTransformIdentity, PAVGaugeDegreesToRadians(self.minimumAngle));
     [self.pointerView setTransform:pointerTransform];
 }
 
-/** Animates to the new number, as long as it is higher than current number, and returns with the given identifier */
-- (void)animateToNumber:(NSUInteger)newNumber identifier:(NSString *)idenfifier {
-    // need to set as an object property b/c I can't save it to the animation directly
-    self.identifier = idenfifier;
-    
-    /* Rotations do not always go in the correct direction when over 180°, so
-     build an animation that has 2 half-rotations so it goes the right way,
-     and continues the right way.*/
-    
-    CALayer* layer = self.pointerView.layer;
-    
-//    CAKeyframeAnimation *animation = [self revUpAnimationForNumber:newNumber];
-    CAKeyframeAnimation *animation = [self peggedAnimationForNumber:newNumber];
-//    CAKeyframeAnimation *animation = [self smoothAnimationForNumber:newNumber];
-    
-    [layer addAnimation:animation forKey:@"transform.rotation.z"];
-}
 
+
+#pragma mark - Delegate Methods
+
+/** Delegate method that will inform delegate that animation has been finished successfully */
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
     if (flag && [self.delegate respondsToSelector:@selector(pavRoundGaugeView:didCompleteWithIdentifier:)]) {
         [self.delegate pavRoundGaugeView:self didCompleteWithIdentifier:self.identifier];
     }
 }
 
-/** Calculate degrees given the integer value and a multiplier */
+
+
+#pragma mark - Animations
+
+/** Animates to the new number, as long as it is higher than current number, and returns with the given identifier */
+- (void)animateToNumber:(NSUInteger)newNumber identifier:(NSString *)idenfifier {
+    // need to set as an object property b/c I can't save it to the animation directly
+    self.identifier = idenfifier;
+    
+    CAKeyframeAnimation *animation;
+    
+    switch (self.animationStyle) {
+        case PAVRoundGaugeViewAnimationStyleRevUp:
+            animation = [self revUpAnimationForNumber:newNumber];
+            break;
+        case PAVRoundGaugeViewAnimationStylePegged:
+            animation = [self peggedAnimationForNumber:newNumber];
+            break;
+        case PAVRoundGaugeViewAnimationStyleSmooth:
+            animation = [self smoothAnimationForNumber:newNumber];
+            break;
+            
+        default:
+            break;
+    }
+    
+    [self.pointerView.layer addAnimation:animation forKey:@"transform.rotation.z"];
+}
+
+/** Calculate degrees given the integer value and a multiplier (for animation keyframes) */
 - (CGFloat)degreesFromMinimumAngleForNumber:(NSUInteger)newNumber multiplier:(CGFloat)multiplier {
-    CGFloat degreesToRotate = self.degreesPerPoint * (CGFloat)newNumber * multiplier;
+    // find degrees to rotate given new number and subtract the starting number
+    CGFloat degreesToRotate = self.degreesPerPoint * ((CGFloat)newNumber - (CGFloat)self.startingNumber) * multiplier;
     degreesToRotate += self.minimumAngle;
     return degreesToRotate;
 }
 
-/** Animation where the needle goes farther than the final resting number momentarily */
+/** Animation where the needle goes farther than the final resting number momentarily.
+ IMPORTANT NOTE: Rotations do not always go in the correct direction when over 180°, so
+ build an animation that has 2 half-rotations so it goes the right way,
+ and continues the right way.*/
 - (CAKeyframeAnimation *)revUpAnimationForNumber:(NSUInteger)newNumber {
     CGFloat halfDegreesToRotate = [self degreesFromMinimumAngleForNumber:newNumber multiplier:0.5];
     CGFloat fullDegreesToRotate = [self degreesFromMinimumAngleForNumber:newNumber multiplier:1.0];
@@ -300,6 +326,15 @@ float PAVGaugeDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI /
 - (void)setFrontBezelImage:(UIImage *)frontBezelImage {
     _frontBezelImage = frontBezelImage;
     self.frontBezelImageView.image = self.frontBezelImage;
+}
+
+- (void)setPointerAxisOffset:(CGFloat)pointerAxisOffset {
+    // catch illegal values
+    if (pointerAxisOffset > 1.0 || pointerAxisOffset < 0.0) {
+        return;
+    }
+    _pointerAxisOffset = pointerAxisOffset;
+    self.pointerView.center = CGPointMake(0.5 * CGRectGetWidth(self.frame), pointerAxisOffset * CGRectGetHeight(self.frame));
 }
 
 @end

@@ -10,7 +10,7 @@
 #import "PAVRoundGaugeView.h"
 
 
-@interface ViewController ()
+@interface ViewController () <pavRoundGaugeViewDelegate>
 
 @property (nonatomic, strong) IBOutlet PAVRoundGaugeView *gaugeView;
 @property (nonatomic, strong) IBOutlet UITextField *toValueField;
@@ -22,13 +22,23 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
-    
+
     [self.gaugeView setBackgroundImage:[UIImage imageNamed:@"GaugeBackground"]];
     [self.gaugeView setPointerImage:[UIImage imageNamed:@"GaugePointer"]];
+    
+    // nearly full sweep 
     [self.gaugeView setMinimumAngle:45.0];
     [self.gaugeView setMaximumAngle:315.0];
+    
+    // a high offset fuel guage
+//    [self.gaugeView setMinimumAngle:135.0];
+//    [self.gaugeView setMaximumAngle:225.0];
+//    [self.gaugeView setPointerAxisOffset:0.66];
+    
     [self.gaugeView setMaximumValue:10];
+    [self.gaugeView setDelegate:self];
+    
+    // set animation style here
     [self.gaugeView setupGaugeWithStartingNumber:0 animationStyle:PAVRoundGaugeViewAnimationStyleRevUp];
 }
 
@@ -49,6 +59,10 @@
 
 - (IBAction)stopAnimation:(id)sender {
     [self.gaugeView stopAnimation];
+}
+
+- (void)pavRoundGaugeView:(PAVRoundGaugeView *)gaugeView didCompleteWithIdentifier:(NSString *)identifier {
+    printf(" Guage animation complete, ID: %s", [identifier UTF8String]);
 }
 
 @end

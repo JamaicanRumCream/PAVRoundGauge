@@ -35,18 +35,18 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) UIImage *pointerImage;
 @property (nonatomic, strong) UIImage *frontBezelImage;
 
-/** The angle in degrees where the point can start */
+/** The angle in degrees where the pointer can start, will be 0 if not set. */
 @property (nonatomic, assign) CGFloat minimumAngle;
 
-/** The angle in degrees where the pointer will stop and go no further, can be empty */
+/** The angle in degrees where the pointer will stop and go no further, REQUIRED. */
 @property (nonatomic, assign) CGFloat maximumAngle;
 
 /** The maximum value the gauge can show; it should be a whole number
- such as 10 for max questions answered, or 550 for max speed points */
+ such as 10 for max questions answered, or 550 for max speed points. */
 @property (nonatomic, assign) CGFloat maximumValue;
 
 /** Pointers whose center is not the center of the entire gauge
- offset the pointer center. 0.5 is center, 0 is bottom of gauge, 1 is top of gauge */
+ offset the pointer center. 0.5 is center, 0 is top of gauge, 1 is bottom of gauge. */
 @property (nonatomic, assign) CGFloat pointerAxisOffset;
 
 - (void)setupGaugeWithStartingNumber:(NSUInteger)startingNumber animationStyle:(PAVRoundGaugeViewAnimationStyle)animationStyle;
