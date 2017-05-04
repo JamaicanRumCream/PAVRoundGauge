@@ -47,7 +47,7 @@ typedef enum : NSUInteger {
 
 - (void)setupGaugeWithStartingNumber:(NSUInteger)startingNumber maxValue:(CGFloat)maximumValue minAngle:(CGFloat)minimumAngle maxAngle:(CGFloat)maximumAngle animationStyle:(PAVRoundGaugeViewAnimationStyle)animationStyle;
 
-/** Animates to the new number, as long as it is higher than current number, and returns with the given identifier */
+/** Animates to the new number (higher or lower than startingNumber), and returns with the given identifier */
 - (void)animateToNumber:(NSUInteger)newNumber identifier:(NSString *)idenfifier;
 
 - (void)stopAnimation;

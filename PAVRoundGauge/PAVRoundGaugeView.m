@@ -30,13 +30,13 @@ float PAVGaugeDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI /
 
 /** The maximum value the gauge can show; it should be a whole number
  such as 10 for max questions answered, or 550 for max speed points.
- MUST ALWAYS be set after the angle values are set! */
+ MUST ALWAYS be set AFTER the angle values are set! */
 @property (nonatomic, assign) CGFloat maximumValue;
 
-/** Value that defines the # of angle degress for each whole number value that will be animated */
+/** Value that defines the # of angle degrees for each whole number value that will be animated */
 @property (nonatomic, assign) CGFloat degreesPerPoint;
 
-/** Number of the starting value, for example fuel guage starts at half and then increased */
+/** Number of the starting value, for example fuel guage starts at half and then increases */
 @property (nonatomic, assign) NSUInteger startingNumber;
 
 /** Name of the animation */
@@ -97,7 +97,7 @@ float PAVGaugeDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI /
     CGFloat degreesToOffset = ((self.maximumAngle - self.minimumAngle) / self.maximumValue) * (CGFloat)startingNumber;
     self.minimumAngle += degreesToOffset;
     
-    // rotate the pointer to it's minimum (real-life/visual) state
+    // rotate the pointer to it's minimum/start (real-life/visual) state
     CGAffineTransform pointerTransform = CGAffineTransformRotate(CGAffineTransformIdentity, PAVGaugeDegreesToRadians(self.minimumAngle));
     [self.pointerView setTransform:pointerTransform];
 }
@@ -106,7 +106,7 @@ float PAVGaugeDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI /
 
 #pragma mark - Delegate Methods
 
-/** Delegate method that will inform delegate that animation has been finished successfully */
+/** Method that will inform delegate that animation has been finished successfully */
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
     if (flag && [self.delegate respondsToSelector:@selector(pavRoundGaugeView:didCompleteWithIdentifier:)]) {
         [self.delegate pavRoundGaugeView:self didCompleteWithIdentifier:self.identifier];
@@ -117,7 +117,7 @@ float PAVGaugeDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI /
 
 #pragma mark - Animations
 
-/** Animates to the new number, as long as it is higher than current number, and returns with the given identifier */
+/** Animates to the new number (higher or lower than startingNumber), and returns with the given identifier */
 - (void)animateToNumber:(NSUInteger)newNumber identifier:(NSString *)idenfifier {
     // need to set as an object property b/c I can't save it to the animation directly
     self.identifier = idenfifier;
@@ -307,7 +307,7 @@ float PAVGaugeDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI /
     // IMPORTANT: Always be sure angle values are set before calling this setter
     _maximumValue = maximumValue;
     
-    NSAssert(maximumValue != 0, @"🚫 Attempting to set maximumValue at 0 which will cause Ø division.");
+    NSAssert(maximumValue != 0, @"🚫 Attempting to set maximumValue to 0 which will cause Ø division.");
     NSAssert(self.maximumAngle > 0, @"🚫 maximumAngle is 0 and should be greater than Ø.");
     
     self.degreesPerPoint = (self.maximumAngle - self.minimumAngle) / _maximumValue;
@@ -340,11 +340,14 @@ float PAVGaugeDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI /
 
 - (void)setPointerAxisOffset:(CGFloat)pointerAxisOffset {
     // catch illegal values
-    if (pointerAxisOffset > 1.0 || pointerAxisOffset < 0.0) {
-        return;
+    if (pointerAxisOffset > 1.0) {
+        _pointerAxisOffset = 1.0;
+    } else if (pointerAxisOffset < 0.0) {
+        _pointerAxisOffset = 0.0;
+    } else {
+        _pointerAxisOffset = pointerAxisOffset;
     }
-    _pointerAxisOffset = pointerAxisOffset;
-    self.pointerView.center = CGPointMake(0.5 * CGRectGetWidth(self.frame), pointerAxisOffset * CGRectGetHeight(self.frame));
+    self.pointerView.center = CGPointMake(0.5 * CGRectGetWidth(self.frame), _pointerAxisOffset * CGRectGetHeight(self.frame));
 }
 
 @end

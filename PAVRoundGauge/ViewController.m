@@ -29,14 +29,14 @@
 
     
     // nearly full sweep like speedo/tach
-//    [self.gaugeView setupGaugeWithStartingNumber:0 maxValue:10 minAngle:45 maxAngle:315 animationStyle:PAVRoundGaugeViewAnimationStyleRevUp];
+//    [self.gaugeView setupGaugeWithStartingNumber:3 maxValue:10 minAngle:45 maxAngle:315 animationStyle:PAVRoundGaugeViewAnimationStyleRevUp];
     
-    [self.gaugeView setupGaugeWithStartingNumber:3 maxValue:10 minAngle:45 maxAngle:315 animationStyle:PAVRoundGaugeViewAnimationStylePegged];
+//    [self.gaugeView setupGaugeWithStartingNumber:3 maxValue:10 minAngle:45 maxAngle:315 animationStyle:PAVRoundGaugeViewAnimationStylePegged];
     
     
     // a high offset fuel guage
-//    [self.gaugeView setPointerAxisOffset:0.66];
-//    [self.gaugeView setupGaugeWithStartingNumber:0 maxValue:10 minAngle:135 maxAngle:225 animationStyle:PAVRoundGaugeViewAnimationStyleSmooth];
+    [self.gaugeView setPointerAxisOffset:0.66];
+    [self.gaugeView setupGaugeWithStartingNumber:3 maxValue:10 minAngle:135 maxAngle:225 animationStyle:PAVRoundGaugeViewAnimationStyleSmooth];
 }
 
 
