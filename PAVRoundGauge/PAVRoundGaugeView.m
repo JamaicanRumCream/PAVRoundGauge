@@ -50,7 +50,7 @@ float PAVGaugeDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI /
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        [self setup];
+        //nothing
     }
     return self;
 }
@@ -58,7 +58,7 @@ float PAVGaugeDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI /
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        [self setup];
+        //nothing
     }
     return self;
 }
@@ -84,6 +84,8 @@ float PAVGaugeDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI /
 }
 
 - (void)setupGaugeWithStartingNumber:(NSUInteger)startingNumber maxValue:(CGFloat)maximumValue minAngle:(CGFloat)minimumAngle maxAngle:(CGFloat)maximumAngle animationStyle:(PAVRoundGaugeViewAnimationStyle)animationStyle {
+    
+    [self setup];
     
     _startingNumber = startingNumber;
     _animationStyle = animationStyle;

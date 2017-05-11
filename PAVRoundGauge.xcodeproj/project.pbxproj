@@ -29,8 +29,8 @@
 		5F3BCCA91EB951090001FB26 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5F3BCCAC1EB951090001FB26 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5F3BCCAE1EB951090001FB26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5F3BCCB41EB9512A0001FB26 /* PAVRoundGaugeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PAVRoundGaugeView.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		5F3BCCB51EB9512A0001FB26 /* PAVRoundGaugeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PAVRoundGaugeView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		5F3BCCB41EB9512A0001FB26 /* PAVRoundGaugeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PAVRoundGaugeView.h; sourceTree = "<group>"; };
+		5F3BCCB51EB9512A0001FB26 /* PAVRoundGaugeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PAVRoundGaugeView.m; sourceTree = "<group>"; };
 		5F3BCCB81EB95CE10001FB26 /* GaugeBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = GaugeBackground.png; path = Graphics/GaugeBackground.png; sourceTree = "<group>"; };
 		5F3BCCB91EB95CE10001FB26 /* GaugePointer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = GaugePointer.png; path = Graphics/GaugePointer.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
