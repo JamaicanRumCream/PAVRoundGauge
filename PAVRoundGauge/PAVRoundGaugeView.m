@@ -102,6 +102,8 @@ float PAVGaugeDegreesToRadians(float degrees) { return (degrees - 180) * (M_PI /
     // rotate the pointer to it's minimum/start (real-life/visual) state
     CGAffineTransform pointerTransform = CGAffineTransformRotate(CGAffineTransformIdentity, PAVGaugeDegreesToRadians(self.minimumAngle));
     [self.pointerView setTransform:pointerTransform];
+    
+    self.backgroundColor = [UIColor clearColor];
 }
 
 
