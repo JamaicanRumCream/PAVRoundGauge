@@ -33,7 +33,7 @@ typedef enum : NSUInteger {
 
 @interface PAVRoundGaugeView : UIView
 
-@property (nonatomic, strong) id<pavRoundGaugeViewDelegate> delegate;
+@property (nonatomic, weak) id<pavRoundGaugeViewDelegate> delegate;
 
 @property (nonatomic, strong) UIImage *backgroundImage;
 @property (nonatomic, strong) UIImage *sweptAreaMaskImage;
